@@ -197,16 +197,15 @@ def _vote_count_bucket(votes: float) -> str:
 
 
 def _runtime_bucket(runtime: float) -> str:
-    """Categorise runtimes into short/standard/extended/epic.
-
-    Returns:
-        - "short" if runtime < 90 minutes
-        - "standard" if 90 <= runtime < 120 minutes
-        - "extended" if 120 <= runtime < 150 minutes
-        - "epic" if runtime >= 150 minutes
-        - "unknown" if runtime is None or NaN
-    """
-    return ""  # TODO: implement
+    if runtime is None or pd.isna(runtime):
+        return "unknown"
+    if runtime < 90:
+        return "short"
+    if runtime < 120:
+        return "standard"
+    if runtime < 150:
+        return "extended"
+    return "epic"
 
 
 def _profit(df: pd.DataFrame) -> pd.Series:
